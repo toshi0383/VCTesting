@@ -16,8 +16,23 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [_button setTitle:@"load" forState:UIControlStateNormal];
     _label.text = @"load";
+}
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    _label.text = @"willAppear";
+}
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    _label.text = @"willLayoutSubviews";
+}
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    _label.text = @"didLayoutSubviews";
+}
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    _label.text = @"didDisappear";
 }
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];

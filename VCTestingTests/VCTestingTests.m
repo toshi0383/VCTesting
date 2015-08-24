@@ -18,29 +18,39 @@
 
 - (void)setUp {
     [super setUp];
+    NSLog(@"================ setUp ================");
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
     _vc = [sb instantiateInitialViewController];
-    // Either `[_vc view]` or `[UIApplication sharedApplication].keyWindow.rootViewController = _vc;` makes _vc to load views
+}
+- (void)testDidLoad {
+    /// Either `[_vc view]` or `[UIApplication sharedApplication].keyWindow.rootViewController = _vc;` makes _vc to load views
     [_vc view];
 //    [UIApplication sharedApplication].keyWindow.rootViewController = _vc;
-}
-- (void)present {
-    UIViewController *v = [UIViewController new];
-    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:v];
-    [UIApplication sharedApplication].keyWindow.rootViewController = nav;
-    [nav presentViewController:_vc animated:NO completion:^{
-        NSLog(@"presented");
-    }];
-}
-
-- (void)testExample {
-    // This is an example of a functional test case.
     NSString *s =_vc.label.text;
     XCTAssert([s isEqualToString:@"load"], @"%@",s);
-    [self present];
-    XCTAssert([s isEqualToString:@"appear"], @"%@",s);
+
+}
+- (void)testDidAppear {
+    UIViewController *v = [UIViewController new];
+    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:v];
+
+    /// actually starting to load views here
+    [UIApplication sharedApplication].keyWindow.rootViewController = nav;
+    
+    /// try to call viewDidAppear
+    XCTestExpectation *ex = [self expectationWithDescription:@"try to call viewDidAppear:"];
+    [nav presentViewController:_vc animated:NO completion:^{
+        NSLog(@"================= Presented =================");
+        NSString *s =_vc.label.text;
+        XCTAssert([s isEqualToString:@"appear"], @"%@",s);
+        [ex fulfill];
+    }];
+    [self waitForExpectationsWithTimeout:5 handler:nil];
 }
 - (void)testTap {
+    /// load views
+    [_vc view];
+    /// send action to button
     [_vc.button sendActionsForControlEvents:UIControlEventTouchUpInside];
     NSString *s =_vc.label.text;
     XCTAssert([s isEqualToString:@"tap"], @"%@",s);
