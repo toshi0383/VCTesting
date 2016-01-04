@@ -15,7 +15,23 @@
 @implementation AppDelegate
 
 
+//static BOOL isRunningTests(void) __attribute__((const));
+
+static BOOL isRunningTests(void)
+{
+    NSDictionary* environment = [[NSProcessInfo processInfo] environment];
+    NSString* injectBundle = environment[@"XCInjectBundle"];
+    return [[injectBundle pathExtension] isEqualToString:@"xctest"];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+
+    /// Detect if Running test or not
+    /// @SeeAlso https://www.objc.io/issues/1-view-controllers/testing-view-controllers/
+    if (isRunningTests()) {
+        return YES;
+    }
+    assert(NO);
     // Override point for customization after application launch.
     return YES;
 }
