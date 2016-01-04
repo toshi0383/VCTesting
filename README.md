@@ -1,8 +1,10 @@
 # VCTesting
 Playground for ViewController testing
 
+Demonstrates how to test a ViewController
+
 # Usage
-open with your Xcode, then Command + U
+Open with your Xcode, then Command + U
 
 # ToDo
-- test all UIViewController's delegate methods (e.g. viewWillLayoutSubviews and so on)
+- Test all UIViewController's delegate methods (e.g. viewWillLayoutSubviews and so on)
