@@ -10,6 +10,11 @@
 #import <XCTest/XCTest.h>
 #import "ViewController.h"
 
+/**
+ * Demonstrates how to test a ViewController
+ * @SeeAlso http://www.slideshare.net/bgesiak/everything-you-never-wanted
+ */
+
 @interface VCTestingTests : XCTestCase
 @property ViewController *vc;
 @end
